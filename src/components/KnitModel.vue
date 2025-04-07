@@ -8,23 +8,34 @@ import { onBeforeUnmount, onMounted, watchEffect } from 'vue';
 let texture, yokeTexture, filler, filledYoke, material, yokeMaterial;
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(66, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+// const renderWidth = window.innerWidth * 0.25;
+// const renderHeight = window.innerHeight * 0.5;
+const renderWidth = 450;
+const renderHeight = 500;
+const aspectRatio = renderWidth / renderHeight;
+
+const camera = new THREE.PerspectiveCamera(66, aspectRatio, 0.1, 1000);
+camera.updateProjectionMatrix();
+camera.position.set(0, 1, 2);
+
 const renderer = new THREE.WebGLRenderer();
+renderer.setSize(renderWidth, renderHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Soft shadows
+
 const controls = new OrbitControls(camera, renderer.domElement);
+controls.enablePan = true;
+
 const loader = new GLTFLoader();
+
 const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
 directionalLight.position.set(10, 10, 10);
 directionalLight.castShadow = true;
-renderer.setSize(window.innerWidth * 0.5, window.innerHeight * 0.5);
-// renderer.setSize(window.innerWidth, window.innerHeight);
+
 scene.background = new THREE.Color(0xe0e0e0);
 scene.add(directionalLight);
 
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Soft shadows
-controls.enablePan = true;
-
-camera.position.set(0, 1, 2);
 controls.update();
 
 const loadFiller = async () => {

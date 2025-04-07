@@ -55,8 +55,8 @@ onUnmounted(() => {
       </div> -->
 
 
-    <!--     <div id="renderKnitModel">
+    <div id="renderKnitModel">
       <KnitModel />
-    </div> -->
+    </div>
   </div>
 </template>
