@@ -27,15 +27,15 @@ const handleAddColorPicker = () => {
 </script>
 <template>
   <div>
-    <p>Choose colors for the pattern</p>
     <div v-for="(colorObject, index) in palette" :key="index" v-show="palette[index].show">
       <ColorPicker :index="index" />
     </div>
-  </div>
-  <div class="add-container">
-    <button @click="handleAddColorPicker" class="cursor-pointer">
-      <img :src="addIcon" alt="Add" class="icon w-6 h-6" />
-    </button>
+
+    <div class="w-full mt-4 flex justify-center">
+      <button @click="handleAddColorPicker" class="cursor-pointer">
+        <img :src="addIcon" alt="Add" class="icon w-6 h-6" />
+      </button>
+    </div>
   </div>
 </template>
 
@@ -46,8 +46,8 @@ input[type="color"] {
   appearance: none;
   border: none;
   background: none;
-  width: 25px;
-  height: 25px;
+  width: 25px !important;
+  height: 25px !important;
   padding: 0;
   cursor: pointer;
 }

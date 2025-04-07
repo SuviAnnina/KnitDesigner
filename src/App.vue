@@ -20,7 +20,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div>
+  <!--   <div>
     <br />
     <br />
     <div class="container">
@@ -31,23 +31,32 @@ onUnmounted(() => {
         <KnitModel />
       </div>
     </div>
+  </div> -->
+
+  <div class="flex h-screen">
+    <!-- Left Side (30% width) -->
+    <div class="w-1/3 p-4">
+      <div class="flex space-x-4">
+        <YarnManager />
+        <P5Grid />
+      </div>
+    </div>
+
+    <!-- Right Side (70% width) -->
+    <div class="w-2/3 p-4 flex flex-col space-y-4">
+      <div class="flex-1">
+        <PatternImage />
+      </div>
+    </div>
+    <!-- <div class="flex-1">
+        <div id="renderKnitModel">
+          <KnitModel />
+        </div>
+      </div> -->
+
+
+    <!--     <div id="renderKnitModel">
+      <KnitModel />
+    </div> -->
   </div>
 </template>
-
-<style>
-/* #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start; 
-  gap: 20px; 
-} */
-</style>

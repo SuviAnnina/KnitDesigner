@@ -8,7 +8,7 @@ import { clearGrid, setGridValue, getGridLength, getRow } from '../gridStore'
 
 let p5Instance;
 const chosenSize = ref("S");
-const squareWidth = 20;
+const squareWidth = 16;
 
 const handleClearGrid = () => {
     const isConfirmed = confirm("Are you sure you want to clear canvas?");
@@ -21,7 +21,7 @@ const handleClearGrid = () => {
 
 const sketch = (p) => {
     p.setup = () => {
-        p.createCanvas(180, 1010);
+        p.createCanvas(140, 810);
         p.background(canvasColor);
         p.noLoop();
     };
@@ -91,9 +91,9 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <div>
-        <label for="size">Choose size template</label>
-        <select name="size" id="size" v-model="chosenSize">
+    <!--     <div class="flex flex-col items-center space-y-4">
+        <label for="size" class="text-sm font-small">Size: </label>
+        <select name="size" id="size" v-model="chosenSize" class="p-2 border rounded-md">
             <option value="XS">XS</option>
             <option value="S">S</option>
             <option value="M">M</option>
@@ -104,27 +104,31 @@ onBeforeUnmount(() => {
     </div>
     <div id="p5-container" class="p5-container"></div>
     <div>
-        <button @click="handleClearGrid" class="clearcanvas">Clear canvas</button>
+        <button @click="handleClearGrid"
+            class="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700 focus:outline-none">Clear canvas
+        </button>
+    </div> -->
+
+    <div class="flex flex-col items-center space-y-4">
+        <div class="flex flex-col items-center space-y-2">
+            <!-- <label for="size" class="text-sm font-medium">Size: </label> -->
+            <select name="size" id="size" v-model="chosenSize" class="p-0.25 border rounded-md">
+                <option value="XS">XS</option>
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="XXL">XXL</option>
+            </select>
+        </div>
+
+        <div id="p5-container" class="p5-container"></div>
+
+        <div>
+            <button @click="handleClearGrid"
+                class="px-1.5 py-1.5 text-md bg-red-400 text-white rounded-lg hover:bg-red-500 focus:outline-none cursor-pointer">
+                Clear grid
+            </button>
+        </div>
     </div>
 </template>
-
-<style>
-/* .p5-container {
-  margin-top: 20px;
-}
-
-.clearcanvas {
-  width: 130px;
-  border: 1px solid #000;
-  border-radius: 15px;
-  margin-top: 20px;
-}
-
-.clearcanvas:hover {
-  background-color: rgb(226, 232, 228);
-}
-
-.clearcanvas:active{
-    background-color: rgb(136, 159, 152);
-} */
-</style>
