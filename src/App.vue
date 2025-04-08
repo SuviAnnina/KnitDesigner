@@ -21,27 +21,24 @@ onUnmounted(() => {
 
 <template>
   <div class="flex flex-wrap h-screen">
-    <!-- Left Side (30% width) -->
-    <div class="w-full lg:w-1/6 py-4 px-1">
+    <!-- Left Side -->
+    <div class="w-full sm:w-full lg:w-full xl:w-1/5 2xl:w-1/6 py-4 px-1">
       <div class="flex space-x-2 justify-center">
         <YarnManager />
         <P5Grid />
       </div>
     </div>
 
-    <!-- Right Side (70% width) -->
-    <div class="w-full lg:w-5/6 py-4 px-2 flex flex-col lg:flex-row lg:space-x-4">
-
-      <div class="w-full lg:w-3/5">
+    <!-- Right Side -->
+    <div
+      class="w-full sm:w-full lg:w-full xl:w-4/5 2xl:w-5/6 py-4 px-2 flex flex-col lg:flex-col 2xl:flex-row lg:space-x-4 2xl:space-x-4">
+      <div class="w-full lg:w-3/5 xl:ml-10 2xl:w-3/5">
         <PatternImage />
       </div>
 
-      <div class="w-full lg:w-2/5 mt-4 lg:mt-0" id="renderKnitModel">
+      <div class="w-full lg:w-2/5 2xl:w-2/5 mt-4 lg:mt-0 xl:ml-10 xl:mt-5 2xl:mt-0" id="renderKnitModel">
         <KnitModel />
       </div>
-
     </div>
   </div>
-
-
 </template>

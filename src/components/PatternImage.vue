@@ -58,6 +58,9 @@ const sketch = (p5Instance) => {
 
     p5Instance.setup = () => {
         p5Instance.createCanvas(config.canvas.width, config.canvas.height);
+
+        p5Instance.canvas.style.borderRadius = '2.5rem';
+
         p5Instance.noLoop();
         p5Instance.imageMode(p5Instance.CORNERS);
 
