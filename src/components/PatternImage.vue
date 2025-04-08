@@ -24,8 +24,10 @@ let config = {
         height: 1000,
     },
     canvas: {
-        width: 900,
-        height: 900,
+        width: 800,
+        height: 800,
+        // width: 900,
+        // height: 900,
     },
     slice: {
         img: null,
@@ -63,13 +65,13 @@ const sketch = (p5Instance) => {
         createFiller();
         createFilledYoke();
 
-        let button = p5Instance.createButton('Save canvas');
-        button.position(0, 950);
-        button.mousePressed(() => {
-            config.yoke.img.save("yoke.png")
-            config.yoke.filledImg.save("filledyoke.png")
-            config.filler.img.save("filler.png")
-        });
+        // let button = p5Instance.createButton('Save canvas');
+        // button.position(0, 950);
+        // button.mousePressed(() => {
+        //     config.yoke.img.save("yoke.png")
+        //     config.yoke.filledImg.save("filledyoke.png")
+        //     config.filler.img.save("filler.png")
+        // });
     };
 
     p5Instance.draw = () => {

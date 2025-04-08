@@ -109,6 +109,7 @@ watchEffect(updateTexture);
 
 onMounted(() => {
     document.getElementById("renderKnitModel").appendChild(renderer.domElement);
+    renderer.domElement.style.borderRadius = '2.5rem'
     loadFiller().then(() => {
         animate();
     });

@@ -83,6 +83,12 @@ watch(chosenSize, () => {
 
 onMounted(() => {
     p5Instance = new p5(sketch, document.getElementById("p5-container"));
+    setTimeout(() => {
+        const canvas = document.getElementById("defaultCanvas1");
+        if (canvas) {
+            canvas.style.borderRadius = "2.5rem";
+        }
+    });
 });
 
 onBeforeUnmount(() => {
@@ -91,27 +97,8 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <!--     <div class="flex flex-col items-center space-y-4">
-        <label for="size" class="text-sm font-small">Size: </label>
-        <select name="size" id="size" v-model="chosenSize" class="p-2 border rounded-md">
-            <option value="XS">XS</option>
-            <option value="S">S</option>
-            <option value="M">M</option>
-            <option value="L">L</option>
-            <option value="XL">XL</option>
-            <option value="XXL">XXL</option>
-        </select>
-    </div>
-    <div id="p5-container" class="p5-container"></div>
-    <div>
-        <button @click="handleClearGrid"
-            class="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700 focus:outline-none">Clear canvas
-        </button>
-    </div> -->
-
     <div class="flex flex-col items-center space-y-4">
-        <div class="flex flex-col items-center space-y-2">
-            <!-- <label for="size" class="text-sm font-medium">Size: </label> -->
+        <div class="flex flex-row items-center space-x-1">
             <select name="size" id="size" v-model="chosenSize" class="p-0.25 border rounded-md">
                 <option value="XS">XS</option>
                 <option value="S">S</option>
@@ -120,15 +107,12 @@ onBeforeUnmount(() => {
                 <option value="XL">XL</option>
                 <option value="XXL">XXL</option>
             </select>
+            <button @click="handleClearGrid"
+                class="px-1.5 py-0.75 text-md bg-red-400 text-white rounded-lg hover:bg-red-500 focus:outline-none cursor-pointer">
+                Clear
+            </button>
         </div>
 
         <div id="p5-container" class="p5-container"></div>
-
-        <div>
-            <button @click="handleClearGrid"
-                class="px-1.5 py-1.5 text-md bg-red-400 text-white rounded-lg hover:bg-red-500 focus:outline-none cursor-pointer">
-                Clear grid
-            </button>
-        </div>
     </div>
 </template>
