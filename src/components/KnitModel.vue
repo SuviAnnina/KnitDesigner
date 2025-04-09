@@ -19,19 +19,21 @@ camera.position.set(0, 1, 2);
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(renderWidth, renderHeight);
-// renderer.shadowMap.enabled = true;
-// renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Soft shadows
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enablePan = true;
 
 const loader = new GLTFLoader();
 
-// const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-// directionalLight.position.set(10, 10, 10);
-// directionalLight.castShadow = true;
+const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+directionalLight.position.set(10, 10, 10);
+directionalLight.castShadow = true;
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
 
-// scene.add(directionalLight);
+scene.add(directionalLight);
+scene.add(ambientLight);
 
 controls.update();
 
@@ -41,7 +43,7 @@ const loadFiller = async () => {
     }
     filler = fillerTexture.value.canvas;
     texture = new THREE.CanvasTexture(filler);
-    material = new THREE.MeshBasicMaterial({ map: texture });
+    material = new THREE.MeshStandardMaterial({ map: texture });
     texture.offset.set(0.785, -0.785);
     texture.center.set(0.5, 0.5);
     texture.repeat.set(3.3, 3.3);
@@ -51,7 +53,7 @@ const loadFiller = async () => {
 
     filledYoke = filledYokeTexture.value.canvas;
     yokeTexture = new THREE.CanvasTexture(filledYoke);
-    yokeMaterial = new THREE.MeshBasicMaterial({ map: yokeTexture });
+    yokeMaterial = new THREE.MeshStandardMaterial({ map: yokeTexture });
     yokeTexture.offset.set(0.780, -0.790); // moves left/right (U) and up/down (V)
     yokeTexture.center.set(0.5, 0.5);
     yokeTexture.repeat.set(2.8, 2.8); // scale the yokeTexture along uv map - repeats yokeTexture in U and V direction;
