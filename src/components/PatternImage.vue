@@ -6,6 +6,7 @@ import p5 from "p5";
 import { getGridLength, getRowLength, getRow } from "../gridStore.js";
 import { selectedTemplate } from "../templateStore.js";
 import { setFillerTexture, setFilledYokeTexture, filledYokeTexture } from "../textureStore.js";
+import saveIcon  from '../assets/icons/save.svg';
 
 let p;
 const pi = 3.141592653589793;
@@ -57,7 +58,9 @@ const sketch = (p5Instance) => {
     }
 
     p5Instance.setup = () => {
-        p5Instance.createCanvas(config.canvas.width, config.canvas.height);
+        // p5Instance.createCanvas(config.canvas.width, config.canvas.height);
+        let canvas = p5Instance.createCanvas(config.canvas.width, config.canvas.height);
+        canvas.parent('2d-pattern-container');
 
         p5Instance.canvas.style.borderRadius = '2.5rem';
 
@@ -68,9 +71,13 @@ const sketch = (p5Instance) => {
         createFiller();
         createFilledYoke();
 
-        let button = p5Instance.createButton('Save canvas');
-        // button.position(0, 950);
-        button.position(0, 950);
+        let button = p5Instance.createButton('');
+        button.parent('2d-pattern-container');
+
+        let saveImg = p5Instance.createImg(saveIcon, 'Save');
+        saveImg.addClass('icon w-6 h-6');
+        button.child(saveImg);
+        button.addClass('absolute top-4 right-5 px-1 py-0.5 text-md rounded-lg hover:bg-green-400 focus:outline-none cursor-pointer');
         button.mousePressed(() => {
             config.yoke.img.save("yoke.png")
         });
@@ -319,6 +326,12 @@ watch(selectedTemplate, () => {
 
 onMounted(() => {
     p = new p5(sketch, document.getElementById("2d-pattern-container"));
+    setTimeout(() => {
+        const canvas = document.getElementById("defaultCanvas1");
+        if (canvas) {
+            canvas.style.borderRadius = "2.5rem";
+        }
+    });
 });
 
 onBeforeUnmount(() => {
@@ -344,7 +357,7 @@ const polarToY = (r, theta) => {
 </script>
 
 <template>
-    <div id="2d-pattern-container" class="2d-pattern-container"></div>
+    <div id="2d-pattern-container" class="relative"></div>
 </template>
 
 <style></style>

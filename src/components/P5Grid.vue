@@ -5,6 +5,7 @@ import { palette, selectedColorIndex, canvasColor } from "../colorStore";
 import { ref } from 'vue';
 import { setSelectedTemplate } from "../templateStore";
 import { clearGrid, setGridValue, getGridLength, getRow } from '../gridStore'
+import saveIcon  from '../assets/icons/save.svg';
 
 let p5Instance;
 const chosenSize = ref("S");
@@ -21,9 +22,20 @@ const handleClearGrid = () => {
 
 const sketch = (p) => {
     p.setup = () => {
-        p.createCanvas(140, 810);
+        let canvas = p.createCanvas(140, 810);
+        canvas.parent('p5-container');
         p.background(canvasColor);
         p.noLoop();
+
+        let button = p.createButton('');
+        button.parent('p5-container');
+        let saveImg = p5Instance.createImg(saveIcon, 'Save');
+        saveImg.addClass('icon w-6 h-6');
+        button.child(saveImg);
+        button.addClass('absolute top-0 right-0 px-1 py-0.5 text-md rounded-lg hover:bg-green-400 focus:outline-none cursor-pointer');
+        button.mousePressed(() => {
+            p5Instance.save("pattern.png")
+        });
     };
 
     p.draw = () => {
@@ -83,12 +95,6 @@ watch(chosenSize, () => {
 
 onMounted(() => {
     p5Instance = new p5(sketch, document.getElementById("p5-container"));
-    setTimeout(() => {
-        const canvas = document.getElementById("defaultCanvas1");
-        if (canvas) {
-            canvas.style.borderRadius = "2.5rem";
-        }
-    });
 });
 
 onBeforeUnmount(() => {
@@ -98,8 +104,9 @@ onBeforeUnmount(() => {
 
 <template>
     <div class="flex flex-col items-center space-y-4">
-        <div class="flex flex-row items-center space-x-1">
-            <select name="size" id="size" v-model="chosenSize" class="p-0.25 border rounded-md">
+        <!-- <div class="flex flex-row items-center space-x-1"> -->
+        <div class="flex flex-row content-around space-x-1">
+            <select name="size" id="size" v-model="chosenSize" class="p-0.25 border rounded-md cursor-pointer">
                 <option value="XS">XS</option>
                 <option value="S">S</option>
                 <option value="M">M</option>
@@ -108,11 +115,11 @@ onBeforeUnmount(() => {
                 <option value="XXL">XXL</option>
             </select>
             <button @click="handleClearGrid"
-                class="px-1.5 py-0.75 text-md bg-red-400 text-white rounded-lg hover:bg-red-500 focus:outline-none cursor-pointer">
+                class="px-1.5 py-0.75 text-md bg-red-400 text-black rounded-lg hover:bg-red-500 focus:outline-none cursor-pointer">
                 Clear
             </button>
         </div>
 
-        <div id="p5-container" class="p5-container"></div>
+        <div id="p5-container" class="relative"></div>
     </div>
 </template>
