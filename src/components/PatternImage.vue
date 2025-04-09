@@ -68,13 +68,12 @@ const sketch = (p5Instance) => {
         createFiller();
         createFilledYoke();
 
-        // let button = p5Instance.createButton('Save canvas');
+        let button = p5Instance.createButton('Save canvas');
         // button.position(0, 950);
-        // button.mousePressed(() => {
-        //     config.yoke.img.save("yoke.png")
-        //     config.yoke.filledImg.save("filledyoke.png")
-        //     config.filler.img.save("filler.png")
-        // });
+        button.position(0, 950);
+        button.mousePressed(() => {
+            config.yoke.img.save("yoke.png")
+        });
     };
 
     p5Instance.draw = () => {

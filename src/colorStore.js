@@ -11,36 +11,36 @@ export const palette = reactive([
         show: false,
     },
     {
-        color: "#ba9cba",
+        color: "#ffffff",
         show: true,
     },
     {
-        color: "#00FF00",
+        color: "#9eb39d",
         show: true,
     },
     {
-        color: "#0000FF",
-        show: true,
+        color: "",
+        show: false,
     },
     {
-        color: "#FFFF00",
-        show: true,
+        color: "",
+        show: false,
     },
     {
-        color: "#FF00FF",
-        show: true,
+        color: "",
+        show: false,
     },
     {
-        color: "#00FFFF",
-        show: true,
+        color: "",
+        show: false,
     },
     {
-        color: "#FF8000",
-        show: true,
+        color: "",
+        show: false,
     },
     {
-        color: "#8000FF",
-        show: true,
+        color: "",
+        show: false,
     },
 ])
 
