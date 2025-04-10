@@ -48,18 +48,16 @@ const loadFiller = async () => {
     texture.center.set(0.5, 0.5);
     texture.repeat.set(3.3, 3.3);
     texture.rotation = Math.PI / 2;
-    texture.wrapS = THREE.RepeatWrapping; // repeat horizontally
-    texture.wrapT = THREE.RepeatWrapping; // repeat vertically
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
 
     filledYoke = filledYokeTexture.value.canvas;
     yokeTexture = new THREE.CanvasTexture(filledYoke);
     yokeMaterial = new THREE.MeshStandardMaterial({ map: yokeTexture });
-    yokeTexture.offset.set(0.780, -0.790); // moves left/right (U) and up/down (V)
+    yokeTexture.offset.set(0.780, -0.790);
     yokeTexture.center.set(0.5, 0.5);
-    yokeTexture.repeat.set(2.8, 2.8); // scale the yokeTexture along uv map - repeats yokeTexture in U and V direction;
-    // yokeTexture.wrapS = THREE.RepeatWrapping; 
-    // yokeTexture.wrapT = THREE.RepeatWrapping;
-
+    yokeTexture.repeat.set(2.8, 2.8);
+    
     loader.load('/knit3DModel/knitAngleBased.glb', function (gltf) {
         try {
             gltf.scene.traverse((child) => {

@@ -12,7 +12,7 @@ const chosenSize = ref("S");
 const squareWidth = 16;
 
 const handleClearGrid = () => {
-    const isConfirmed = confirm("Are you sure you want to clear canvas?");
+    const isConfirmed = confirm("Are you sure you want to clear grid?");
 
     if (isConfirmed) {
         clearGrid();
@@ -104,7 +104,6 @@ onBeforeUnmount(() => {
 
 <template>
     <div class="flex flex-col items-center space-y-4">
-        <!-- <div class="flex flex-row items-center space-x-1"> -->
         <div class="flex flex-row content-around space-x-1">
             <select name="size" id="size" v-model="chosenSize" class="p-0.25 border rounded-md cursor-pointer">
                 <option value="XS">XS</option>

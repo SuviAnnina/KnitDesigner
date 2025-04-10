@@ -1,17 +1,10 @@
 <script setup>
-import { ref, watch, defineProps } from "vue";
-import { updateColor, setColorEmpty, palette, updateShow, selectedColorIndex, changeSelectedColor } from '../colorStore';
+import { setColorEmpty, palette, updateShow, changeSelectedColor } from '../colorStore';
 import deleteIcon from '../assets/icons/delete.svg';
 import selectIcon from '../assets/icons/select.svg';
 
 const props = defineProps({
     index: Number
-});
-
-const color = ref(palette[props.index].color);
-
-watch(color, (newColor) => {
-    updateColor(props.index, newColor);
 });
 
 const handleDeleteColorPicker = (index) => {
@@ -31,7 +24,7 @@ const handleSelectedColor = (index) => {
             <button @click="handleDeleteColorPicker(index)" v-if="index !== 0" class="cursor-pointer">
                 <img :src="deleteIcon" alt="Delete" class="icon w-6 h-6" />
             </button>
-            <input type="color" v-model.lazy="color" class="color-input" />
+            <input type="color" v-model.lazy="palette[props.index].color" class="color-input" />
             <button @click="handleSelectedColor(index)" class="cursor-pointer">
                 <img :src="selectIcon" alt="Select" class="icon w-6 h-6" />
             </button>

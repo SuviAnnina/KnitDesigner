@@ -75,7 +75,6 @@ export const getGridLength = () => {
 }
 
 export const getRow = (index) => {
-    // TODO: Check for out of bounds index, consider skippedRows
     if (selectedTemplate.value.size === "XXL") {
         return grid[index];
     }

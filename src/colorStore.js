@@ -1,11 +1,10 @@
 import { reactive, ref } from 'vue'
 
-export const selectedColorIndex = ref(1);
+export const selectedColorIndex = ref(2);
 
 export const canvasColor = "#FFFFFF";
 
 export const palette = reactive([
-    // TODO: color indexes moved up; index 0 now no-color/empty; usable colors 1-8; yarnmanager logic changes
     {
         color: "#000000",
         show: false,

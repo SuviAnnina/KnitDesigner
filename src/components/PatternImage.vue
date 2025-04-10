@@ -77,21 +77,15 @@ const sketch = (p5Instance) => {
         let saveImg = p5Instance.createImg(saveIcon, 'Save');
         saveImg.addClass('icon w-6 h-6');
         button.child(saveImg);
-        button.addClass('absolute top-4 right-5 px-1 py-0.5 text-md rounded-lg hover:bg-green-400 focus:outline-none cursor-pointer');
+        button.addClass('absolute top-4 right-5 sm:right-2 md:right-5 lg:right-5 xl:right-0 2xl:right-5 px-1 py-0.5 text-md rounded-lg hover:bg-green-400 focus:outline-none cursor-pointer');
         button.mousePressed(() => {
             config.yoke.img.save("yoke.png")
         });
     };
 
     p5Instance.draw = () => {
-        let startTime = performance.now();
         p5Instance.background(172, 255);
-
         p5Instance.image(config.yoke.img, 0, 0, p5Instance.width, p5Instance.height);
-
-        let endTime = performance.now();
-        console.log(`[time] draw: ${(endTime - startTime).toFixed(4)} ms, ${((endTime - startTime) / 1000).toFixed(2)} s`);
-        console.log('')
     };
 }
 
@@ -123,13 +117,12 @@ const createSlice = () => {
         [],
         [],
         [],
-        //green               blue                   yellow                    pink                 teal                     orange              purple               bluish-green
-        [1, 1, 7 / 32, 0, -15 / 64, 1, 1, 1],                              // 3          
-        [1, 1, 7 / 32, 0, -1 / 8 * 1.3, -11 / 32, 1, 1],                                   // 4           
-        [1, 5 / 16, 1 / 8, 0, -1 / 8 * 1.25, -11 / 32, 1, 1],                              // 5            
-        [1, 5 / 16, 1 / 8, 0, -1 / 8 * 1.2, -2 / 8 * 1.1, -7 / 16, 1],                             // 6       
-        [3 / 8, 2 / 8, 1 / 8, 0, -1 / 8 * 1.1, -2 / 8 * 1.1, -7 / 16, 1],                                      // 7
-        [3 / 8, 2 / 8, 1 / 8, 0, -1 / 8, -2 / 8, -3 / 8, -4 / 8],                                      // 8
+        [1, 1, 7 / 32, 0, -15 / 64, 1, 1, 1],   
+        [1, 1, 7 / 32, 0, -1 / 8 * 1.3, -11 / 32, 1, 1],
+        [1, 5 / 16, 1 / 8, 0, -1 / 8 * 1.25, -11 / 32, 1, 1],
+        [1, 5 / 16, 1 / 8, 0, -1 / 8 * 1.2, -2 / 8 * 1.1, -7 / 16, 1],
+        [3 / 8, 2 / 8, 1 / 8, 0, -1 / 8 * 1.1, -2 / 8 * 1.1, -7 / 16, 1],
+        [3 / 8, 2 / 8, 1 / 8, 0, -1 / 8, -2 / 8, -3 / 8, -4 / 8],
     ];
 
     const spacing = config.stitch.overlapFactor * config.stitch.width;
@@ -202,8 +195,6 @@ const createYoke = () => {
     config.yoke.img.imageMode(p.CENTER);
     config.yoke.img.translate(config.slice.outerRadius, config.slice.outerRadius);
 
-    // drawSlice(0);
-
     for (let i = 0; i < config.slice.count; i++) {
         drawSlice(i);
     }
@@ -212,7 +203,6 @@ const createYoke = () => {
 }
 
 const createFiller = () => {
-    const startTime = performance.now();
     config.filler.img = cleanupGraphic(config.filler.img);
     config.filler.img = p.createGraphics(config.texture.width, config.texture.height);
     config.filler.img.imageMode(p.CORNER);
@@ -237,8 +227,6 @@ const createFiller = () => {
     setFillerTexture(config.filler.img);
 
     oneColumn = cleanupGraphic(oneColumn);
-    const endTime = performance.now();
-    console.log(`[time] createFiller: ${(endTime - startTime).toFixed(4)} ms, ${((endTime - startTime) / 1000).toFixed(2)} s`);
 }
 
 const createFilledYoke = () => {
@@ -261,9 +249,7 @@ const createFilledYoke = () => {
     config.yoke.filledImg.imageMode(p.CORNERS);
     config.yoke.filledImg.image(config.yoke.img, 0, 0, config.texture.width, config.texture.height);
 
-    console.log("fillledYokeTexture in store: ", filledYokeTexture.value)
     setFilledYokeTexture(config.yoke.filledImg);
-    console.log("fillledYokeTexture in store after setting: ", filledYokeTexture.value)
 
     const endTime = performance.now();
     console.log(`[time] createFilledYoke: ${(endTime - startTime).toFixed(4)} ms, ${((endTime - startTime) / 1000).toFixed(2)} s`);
@@ -359,5 +345,3 @@ const polarToY = (r, theta) => {
 <template>
     <div id="2d-pattern-container" class="relative"></div>
 </template>
-
-<style></style>

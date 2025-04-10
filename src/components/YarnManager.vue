@@ -1,9 +1,7 @@
 <script setup>
 import ColorPicker from './ColorPicker.vue';
-import { palette, updateColor, updateShow } from '../colorStore';
+import { palette, updateColor, updateShow, selectedColorIndex } from '../colorStore';
 import addIcon from '../assets/icons/add.svg';
-
-// TODO: change logic to display colorpickers 1...9
 
 const handleAddColorPicker = () => {
   // Find empty color slot
@@ -14,20 +12,16 @@ const handleAddColorPicker = () => {
   if (emptySlotIndex) {
     updateColor(emptySlotIndex, '#ffffff');
     updateShow(emptySlotIndex, true);
-    // console.log('empty slot index:',emptySlotIndex);
   }
   else {
     alert("You can't add more than 8 colors!");
   }
-  // for (const color in palette){
-  //     console.log(`${color}: ${palette[color].color}`);
-  // }
 };
-
 </script>
+
 <template>
   <div>
-    <div v-for="(colorObject, index) in palette" :key="index" v-show="palette[index].show">
+    <div v-for="(colorObject, index) in palette" :key="index" v-show="colorObject.show" :class="selectedColorIndex === index ? 'bg-gray-200' : ''">
       <ColorPicker :index="index" />
     </div>
 
