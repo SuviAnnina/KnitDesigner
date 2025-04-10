@@ -5,7 +5,7 @@ import { grid } from "../gridStore.js";
 import p5 from "p5";
 import { getGridLength, getRowLength, getRow } from "../gridStore.js";
 import { selectedTemplate } from "../templateStore.js";
-import { setFillerTexture, setFilledYokeTexture, filledYokeTexture } from "../textureStore.js";
+import { setFillerTexture, setFilledYokeTexture } from "../textureStore.js";
 import saveIcon  from '../assets/icons/save.svg';
 
 let p;
@@ -58,7 +58,6 @@ const sketch = (p5Instance) => {
     }
 
     p5Instance.setup = () => {
-        // p5Instance.createCanvas(config.canvas.width, config.canvas.height);
         let canvas = p5Instance.createCanvas(config.canvas.width, config.canvas.height);
         canvas.parent('2d-pattern-container');
 
@@ -99,7 +98,7 @@ const drawStitch = (x, y, angle, colorCode, target) => {
 }
 
 const createSlice = () => {
-    const startTime = performance.now();
+    // const startTime = performance.now();
     const graphicHeight = config.slice.outerRadius * Math.tan(config.slice.angle * 0.5) * 2 + config.stitch.width;
     let slice = config.slice;
 
@@ -171,8 +170,8 @@ const createSlice = () => {
             }
         }
     }
-    const endTime = performance.now();
-    console.log(`[time] createSlice: ${(endTime - startTime).toFixed(4)} ms, ${((endTime - startTime) / 1000).toFixed(2)} s`);
+    // const endTime = performance.now();
+    // console.log(`[time] createSlice: ${(endTime - startTime).toFixed(4)} ms, ${((endTime - startTime) / 1000).toFixed(2)} s`);
 }
 
 const drawSlice = (sliceNumber) => {
@@ -188,7 +187,6 @@ const drawSlice = (sliceNumber) => {
 
 const createYoke = () => {
     createSlice();
-    const startTime = performance.now();
 
     config.yoke.img = cleanupGraphic(config.yoke.img);
     config.yoke.img = p.createGraphics(config.slice.outerRadius * 2, config.slice.outerRadius * 2);
@@ -198,8 +196,6 @@ const createYoke = () => {
     for (let i = 0; i < config.slice.count; i++) {
         drawSlice(i);
     }
-    const endTime = performance.now();
-    console.log(`[time] createYoke: ${(endTime - startTime).toFixed(4)} ms, ${((endTime - startTime) / 1000).toFixed(2)} s`);
 }
 
 const createFiller = () => {
@@ -230,8 +226,6 @@ const createFiller = () => {
 }
 
 const createFilledYoke = () => {
-    const startTime = performance.now();
-
     config.yoke.filledImg = cleanupGraphic(config.yoke.filledImg);
     config.yoke.filledImg = p.createGraphics(config.texture.width, config.texture.height);
 
@@ -250,9 +244,6 @@ const createFilledYoke = () => {
     config.yoke.filledImg.image(config.yoke.img, 0, 0, config.texture.width, config.texture.height);
 
     setFilledYokeTexture(config.yoke.filledImg);
-
-    const endTime = performance.now();
-    console.log(`[time] createFilledYoke: ${(endTime - startTime).toFixed(4)} ms, ${((endTime - startTime) / 1000).toFixed(2)} s`);
 }
 
 const drawFillerToCorner = (corner) => {
