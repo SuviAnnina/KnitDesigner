@@ -11,19 +11,19 @@ Designed for hobbyist knitters, this app helps bring ideas to life and visualize
 - Responsive & Reactive: Designed for computer and tablet users, the app adapts to various screen sizes.
 - Save your work as an image file on your device for later use.
 
-Built with modern web technologies: Developed using Vite, Vue.js, p5.js, and Three.js libraries.
 
 ## Technologies Used
 
+Built with modern web technologies:
 - [Vite](https://vite.dev/)
 - [Vue.js](https://vuejs.org/)
 - [p5.js](https://p5js.org/)
 - [Three.js](https://threejs.org/)
 
-### Screenshot
+### UI
 
 ![Screenshot of the Knit Designer app's UI](/public/knitdesigner_ui.png)
 
 ### Creator
 
-Contact [Suvi](https://github.com/SuviAnnina) ✨
+Questions? Ideas? Contact [Suvi](https://github.com/SuviAnnina) ✨
