@@ -27,10 +27,11 @@ const sketch = (p) => {
         p.background(canvasColor);
         p.noLoop();
 
-        let button = p.createButton('');
+        const button = p.createButton('');
         button.parent('p5-container');
-        let saveImg = p5Instance.createImg(saveIcon, 'Save');
-        saveImg.addClass('icon w-6 h-6');
+
+        const saveImg = p5Instance.createImg(saveIcon, 'Save');
+        saveImg.addClass('icon w-5 h-5');
         button.child(saveImg);
         button.addClass('absolute top-0 right-0 px-1 py-0.5 text-md rounded-lg hover:bg-green-400 focus:outline-none cursor-pointer');
         button.mousePressed(() => {
@@ -104,7 +105,7 @@ onBeforeUnmount(() => {
 
 <template>
     <div class="flex flex-col items-center space-y-4">
-        <div class="flex flex-row content-around space-x-1">
+        <div class="flex flex-row space-x-8 content-around">
             <select name="size" id="size" v-model="chosenSize" class="p-0.25 border rounded-md cursor-pointer">
                 <option value="XS">XS</option>
                 <option value="S">S</option>

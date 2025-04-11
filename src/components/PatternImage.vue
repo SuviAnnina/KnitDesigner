@@ -70,13 +70,13 @@ const sketch = (p5Instance) => {
         createFiller();
         createFilledYoke();
 
-        let button = p5Instance.createButton('');
+        const button = p5Instance.createButton('');
         button.parent('2d-pattern-container');
 
-        let saveImg = p5Instance.createImg(saveIcon, 'Save');
-        saveImg.addClass('icon w-6 h-6');
+        const saveImg = p5Instance.createImg(saveIcon, 'Save');
+        saveImg.addClass('icon w-5 h-5');
         button.child(saveImg);
-        button.addClass('absolute top-4 right-5 sm:right-2 md:right-5 lg:right-5 xl:right-0 2xl:right-5 px-1 py-0.5 text-md rounded-lg hover:bg-green-400 focus:outline-none cursor-pointer');
+        button.addClass('absolute top-4 right-4 z-10 p-1 rounded-lg hover:bg-green-400 cursor-pointer');
         button.mousePressed(() => {
             config.yoke.img.save("yoke.png")
         });
@@ -334,5 +334,5 @@ const polarToY = (r, theta) => {
 </script>
 
 <template>
-    <div id="2d-pattern-container" class="relative"></div>
+    <div id="2d-pattern-container" class="relative w-fit h-fit mx-auto"></div>
 </template>

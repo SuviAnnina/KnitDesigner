@@ -5,6 +5,7 @@ import { onMounted, onUnmounted } from "vue";
 import PatternImage from './components/PatternImage.vue';
 import KnitModel from './components/KnitModel.vue';
 
+
 const handleBeforeUnload = (event) => {
   event.preventDefault();
   event.returnValue = "";
@@ -23,7 +24,7 @@ onUnmounted(() => {
   <div class="flex flex-wrap h-screen">
     <!-- Left Side -->
     <div class="w-full sm:w-full lg:w-full xl:w-1/5 2xl:w-1/6 py-4 px-1">
-      <div class="flex space-x-2 justify-center">
+      <div class="flex space-x-5 justify-center">
         <YarnManager />
         <P5Grid />
       </div>
@@ -31,12 +32,13 @@ onUnmounted(() => {
 
     <!-- Right Side -->
     <div
-      class="w-full sm:w-full lg:w-full xl:w-4/5 2xl:w-5/6 py-4 px-2 flex flex-col lg:flex-col 2xl:flex-row lg:space-x-4 2xl:space-x-4">
-      <div id="yoke" class="w-full lg:w-3/5 xl:ml-10 2xl:w-3/5">
+    class="w-full sm:w-full lg:w-full xl:w-4/5 2xl:w-5/6 py-4 px-2 flex flex-col lg:flex-col 2xl:flex-row lg:space-x-4 2xl:space-x-4">
+
+    <div id="yoke" class="w-full lg:w-3/5 xl:ml-10 2xl:w-3/5">
         <PatternImage />
       </div>
 
-      <div class="w-full lg:w-2/5 2xl:w-2/5 mt-4 xl:ml-10 xl:mt-5 2xl:mt-0" id="renderKnitModel">
+      <div class="w-full lg:w-2/5 2xl:w-2/5 mt-4 xl:ml-1 xl:mt-5 2xl:mt-0 flex flex-col" id="renderKnitModel">
         <KnitModel />
       </div>
     </div>

@@ -3,7 +3,13 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { fillerTexture, filledYokeTexture } from '../textureStore.js';
-import { onBeforeUnmount, onMounted, watchEffect } from 'vue';
+import { ref, onBeforeUnmount, onMounted, watchEffect } from 'vue';
+import leftClick from '../assets/icons/mouse-left.svg'
+import rightClick from '../assets/icons/mouse-right.svg'
+import middleClick from '../assets/icons/mouse-middle.svg'
+
+const canvasContainer = ref(null);
+const isCanvasReady = ref(false);
 
 let texture, yokeTexture, filler, filledYoke, material, yokeMaterial;
 
@@ -27,10 +33,10 @@ controls.enablePan = true;
 
 const loader = new GLTFLoader();
 
-const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-directionalLight.position.set(10, 10, 10);
+const directionalLight = new THREE.DirectionalLight(0xffffff, 2.5);
+directionalLight.position.set(0, 100, 0);
 directionalLight.castShadow = true;
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
 
 scene.add(directionalLight);
 scene.add(ambientLight);
@@ -105,14 +111,16 @@ const animate = () => {
 watchEffect(updateTexture);
 
 onMounted(() => {
-    document.getElementById("renderKnitModel").appendChild(renderer.domElement);
-    renderer.domElement.style.borderRadius = '2.5rem'
-    loadFiller().then(() => {
-        animate();
-    });
-})
+        canvasContainer.value.appendChild(renderer.domElement);
+        renderer.domElement.style.borderRadius = '2.5rem';
+        isCanvasReady.value = true;
+        loadFiller().then(() => {
+            animate();
+        });
+});
 
 onBeforeUnmount(() => {
+    isCanvasReady.value = false;
     scene.traverse((object) => {
         if (object.isMesh) {
             if (object.geometry) object.geometry.dispose();
@@ -150,5 +158,29 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <div></div>
+    <div class="flex flex-col items-center">
+        <!-- 3D knit model -->
+        <div ref="canvasContainer" class="mb-4"></div>
+
+        <!-- User guide -->
+        <div 
+            v-if="isCanvasReady"
+            class="flex justify-around text-xs w-4/5"
+            >
+            <div class="flex flex-row items-center">
+                <img :src="leftClick" alt="left click" class="icon w-5 h-5" />
+                <span>turn</span>
+            </div>
+
+            <div class="flex flex-row items-center">
+                <img :src="middleClick" alt="middle click" class="icon w-5 h-5" />
+                <span>zoom</span>
+            </div>
+
+            <div class="flex flex-row items-center">
+                <img :src="rightClick" alt="right click" class="icon w-5 h-5" />
+                <span>move</span>
+            </div>
+        </div>
+    </div>
 </template>
