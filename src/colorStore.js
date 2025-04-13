@@ -18,27 +18,27 @@ export const palette = reactive([
         show: true,
     },
     {
-        color: "",
+        color: null,
         show: false,
     },
     {
-        color: "",
+        color: null,
         show: false,
     },
     {
-        color: "",
+        color: null,
         show: false,
     },
     {
-        color: "",
+        color: null,
         show: false,
     },
     {
-        color: "",
+        color: null,
         show: false,
     },
     {
-        color: "",
+        color: null,
         show: false,
     },
 ])
@@ -52,7 +52,7 @@ export function updateShow(index, boolean) {
 }
 
 export function setColorEmpty(index) {
-    palette[index].color = '';
+    palette[index].color = null;
 }
 
 export function changeSelectedColor(index) {

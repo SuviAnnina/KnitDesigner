@@ -6,7 +6,7 @@ import addIcon from '../assets/icons/add.svg';
 const handleAddColorPicker = () => {
   // Find empty color slot
   const emptySlotIndex = Object.keys(palette).find(
-    index => palette[index].color === ''
+    index => palette[index].color === null
   );
 
   if (emptySlotIndex) {

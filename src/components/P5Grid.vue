@@ -30,20 +30,20 @@ const sketch = (p) => {
         const button = p.createButton('');
         button.parent('p5-container');
 
-        const saveImg = p5Instance.createImg(saveIcon, 'Save');
+        const saveImg = p.createImg(saveIcon, 'Save');
         saveImg.addClass('icon w-5 h-5');
         button.child(saveImg);
         button.addClass('absolute top-0 right-0 px-1 py-0.5 text-md rounded-lg hover:bg-green-400 focus:outline-none cursor-pointer');
         button.mousePressed(() => {
-            p5Instance.save("pattern.png")
+            p.save("pattern.png")
         });
     };
 
     p.draw = () => {
         p.background(canvasColor);
         // rectangles bordercolor either black or white depending on mainColor
-        let rectBorderColor = p.color(palette[1].color);
-        p.stroke(p.brightness(rectBorderColor) < 50 ? 255 : 0);
+        // let rectBorderColor = p.color(palette[1].color);
+        // p.stroke(p.brightness(rectBorderColor) < 50 ? 255 : 0);
 
         // draws the grid
         for (let y = 0; y < getGridLength(); y++) {
@@ -53,6 +53,7 @@ const sketch = (p) => {
                     continue;
                 }
                 p.fill(palette[row[x]].color);
+                p.stroke(getContrast(palette[row[x]].color, p));
                 p.square(x * squareWidth, y * squareWidth, squareWidth);
             }
         }
@@ -84,6 +85,31 @@ const sketch = (p) => {
         p.redraw();
     }
 }
+
+const getContrast = (color, p) => {
+    const brightness = p.brightness(color);
+    const darkness = 100 - brightness;
+    let contrast = mapCurve(darkness, 0, 100, 0, 255, easeInOutExpo);
+
+    const offset = 125; // how much to correct the color to avoid similar tones
+    if (brightness >= 45 && brightness <= 55){ 
+        contrast += offset;
+    }
+    return contrast;
+}
+
+const mapCurve = (value, inMin, inMax, outMin, outMax, easingFn) => {
+    let t = (value - inMin) / (inMax - inMin);
+    t = easingFn(t);
+    return outMin + (outMax - outMin) * t;
+}
+
+const easeInOutExpo = t =>
+  t === 0 ? 0 :
+  t === 1 ? 1 :
+  t < 0.5
+    ? Math.pow(2, 20 * t - 10) / 2
+    : (2 - Math.pow(2, -20 * t + 10)) / 2;
 
 watch(palette, () => {
     p5Instance.redraw();
