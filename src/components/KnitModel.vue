@@ -3,10 +3,11 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { fillerTexture, filledYokeTexture } from '../textureStore.js';
-import { ref, onBeforeUnmount, onMounted, watchEffect } from 'vue';
+import { ref, onBeforeUnmount, onMounted, watchEffect, watch } from 'vue';
 import leftClick from '../assets/icons/mouse-left.svg'
 import rightClick from '../assets/icons/mouse-right.svg'
 import middleClick from '../assets/icons/mouse-middle.svg'
+import { bgColor } from '../colorStore.js';
 
 const canvasContainer = ref(null);
 const isCanvasReady = ref(false);
@@ -14,7 +15,7 @@ const isCanvasReady = ref(false);
 let texture, yokeTexture, filler, filledYoke, material, yokeMaterial;
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color('#ACACAC');
+scene.background = new THREE.Color(bgColor.value);
 
 const renderWidth = 450;
 const renderHeight = 500;
@@ -109,6 +110,10 @@ const animate = () => {
 }
 
 watchEffect(updateTexture);
+
+watch(bgColor, () => {
+    scene.background = new THREE.Color(bgColor.value);
+})
 
 onMounted(() => {
         canvasContainer.value.appendChild(renderer.domElement);

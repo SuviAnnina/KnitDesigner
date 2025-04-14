@@ -1,12 +1,13 @@
 <script setup>
 import { onMounted, onBeforeUnmount, watch } from "vue";
-import { palette } from "../colorStore.js";
+import { palette, bgColor, changeBgColor } from "../colorStore.js";
 import { grid } from "../gridStore.js";
 import p5 from "p5";
 import { getGridLength, getRowLength, getRow } from "../gridStore.js";
 import { selectedTemplate } from "../templateStore.js";
 import { setFillerTexture, setFilledYokeTexture } from "../textureStore.js";
 import saveIcon  from '../assets/icons/save.svg';
+import canvasColorIcon from '../assets/icons/canvas-color.svg'
 
 let p;
 const pi = 3.141592653589793;
@@ -72,18 +73,28 @@ const sketch = (p5Instance) => {
 
         const button = p5Instance.createButton('');
         button.parent('2d-pattern-container');
-
-        const saveImg = p5Instance.createImg(saveIcon, 'Save');
+        const saveImg = p5Instance.createImg(saveIcon, 'Save yoke image');
         saveImg.addClass('icon w-5 h-5');
         button.child(saveImg);
         button.addClass('absolute top-4 right-4 z-10 p-1 rounded-lg hover:bg-green-400 cursor-pointer');
         button.mousePressed(() => {
             config.yoke.img.save("yoke.png")
         });
+
+        const buttonBackground = p5Instance.createButton('');
+        buttonBackground.parent('2d-pattern-container');
+        const canvasColorImg = p5Instance.createImg(canvasColorIcon, 'Change canvas background color');
+        canvasColorImg.addClass('icon w-5 h-5');
+        buttonBackground.child(canvasColorImg);
+        buttonBackground.addClass('absolute top-4 right-14 z-10 p-1 rounded-lg hover:bg-green-400 cursor-pointer');
+        buttonBackground.mousePressed(() => {
+            changeBgColor();
+            p.redraw();
+        });
     };
 
     p5Instance.draw = () => {
-        p5Instance.background(172, 255);
+        p5Instance.background(bgColor.value);
         p5Instance.image(config.yoke.img, 0, 0, p5Instance.width, p5Instance.height);
     };
 }

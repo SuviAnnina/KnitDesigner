@@ -3,6 +3,7 @@ import { reactive, ref } from 'vue'
 export const selectedColorIndex = ref(2);
 
 export const canvasColor = "#FFFFFF";
+export const bgColor = ref("#ACACAC");
 
 export const palette = reactive([
     {
@@ -57,4 +58,12 @@ export function setColorEmpty(index) {
 
 export function changeSelectedColor(index) {
     selectedColorIndex.value = index;
+}
+
+export function changeBgColor() {
+    if (bgColor.value == "#ACACAC") {
+        bgColor.value = "#707070";
+    } else {
+        bgColor.value = "#ACACAC";
+    }
 }
