@@ -1,14 +1,16 @@
 <script setup>
-import { onMounted, onBeforeUnmount, watch } from "vue";
+import { onMounted, onBeforeUnmount, computed, watch } from "vue";
 import p5 from "p5";
 import { palette, selectedColorIndex, canvasColor } from "../colorStore";
-import { ref } from 'vue';
-import { setSelectedTemplate } from "../templateStore";
+import { selectedTemplate, setSelectedTemplate } from "../templateStore";
 import { clearGrid, setGridValue, getGridLength, getRow } from '../gridStore'
 import saveIcon  from '../assets/icons/save.svg';
 
 let p5Instance;
-const chosenSize = ref("S"); // TODO: tää ei updatee hydratessa
+const selectedSize = computed({
+  get: () => selectedTemplate.value.size,
+  set: (val) => setSelectedTemplate(val)
+});
 const squareWidth = 16;
 
 const handleClearGrid = () => {
@@ -115,8 +117,7 @@ watch(palette, () => {
     p5Instance.redraw();
 })
 
-watch(chosenSize, () => {
-    setSelectedTemplate(chosenSize.value);
+watch(selectedSize, () => {
     p5Instance.redraw();
 })
 
@@ -132,7 +133,7 @@ onBeforeUnmount(() => {
 <template>
     <div class="flex flex-col items-center space-y-4">
         <div class="flex flex-row space-x-8 content-around">
-            <select name="size" id="size" v-model="chosenSize" class="p-0.25 border rounded-md cursor-pointer">
+            <select name="size" id="size" v-model="selectedSize" class="p-0.25 border rounded-md cursor-pointer">
                 <option value="XS">XS</option>
                 <option value="S">S</option>
                 <option value="M">M</option>
