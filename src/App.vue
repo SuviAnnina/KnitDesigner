@@ -30,19 +30,16 @@ watch(selectedTemplate, () => {
 onMounted(() => {
   window.addEventListener("beforeunload", handleBeforeUnload);
   const saved = getSavedSession();
-  console.log('saved in app.vue; ', saved)
 
   if (saved && Object.keys(saved).length > 0){
     if (saved.palette){
       setPalette(saved.palette);
     }
     if (saved.grid){
-      console.log('saved.grid check ')
-      // setGrid(saved.grid)
+      setGrid(saved.grid)
     }
     if (saved.selectedTemplate){
-      console.log('saved.selectedtemplate check')
-      // setSelectedTemplate(saved.selectedTemplate)
+      setSelectedTemplate(saved.selectedTemplate)
     }
   }
 });

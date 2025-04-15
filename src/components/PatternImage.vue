@@ -305,8 +305,7 @@ watch(() => palette[1].color, () => {
 });
 
 watch(grid, () => {
-    console.log('grid watcher')
-    if (isP5Ready.value){
+    if (isP5Ready.value && Array.isArray(grid) && grid.length > 0){
         createYoke();
         createFilledYoke();
         p.redraw();
