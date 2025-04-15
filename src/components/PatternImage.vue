@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, onBeforeUnmount, watch } from "vue";
+import { ref, onMounted, onBeforeUnmount, watch } from "vue";
 import { palette, bgColor, changeBgColor } from "../colorStore.js";
 import { grid } from "../gridStore.js";
 import p5 from "p5";
@@ -12,6 +12,7 @@ import canvasColorIcon from '../assets/icons/canvas-color.svg'
 let p;
 const pi = 3.141592653589793;
 const tau = 6.283185307179586;
+const isP5Ready = ref(false);
 
 let config = {
     stitch: {
@@ -61,11 +62,11 @@ const sketch = (p5Instance) => {
     p5Instance.setup = () => {
         let canvas = p5Instance.createCanvas(config.canvas.width, config.canvas.height);
         canvas.parent('2d-pattern-container');
-
         p5Instance.canvas.style.borderRadius = '2.5rem';
-
         p5Instance.noLoop();
         p5Instance.imageMode(p5Instance.CORNERS);
+
+        isP5Ready.value = true;
 
         createYoke();
         createFiller();
@@ -118,8 +119,9 @@ const createSlice = () => {
     slice.img = p.createGraphics(slice.outerRadius, graphicHeight);
     slice.img.imageMode(p.CENTER);
     slice.img.translate(0, graphicHeight * 0.5);
-    config.stitch.img.resize(config.stitch.width, config.stitch.width);
 
+    config.stitch.img.resize(config.stitch.width, config.stitch.width);
+    
     let leanPairIndex = 0;
     const leanPairs = [[4, 5, false], [1, 2, true], [5, 6, false], [0, 1, true], [6, 7, false]];
 
@@ -219,7 +221,6 @@ const createFiller = () => {
     const fullStitchCount = Math.floor(config.texture.width / scaledStitchWidth);
     const remainderWidth = config.texture.width - fullStitchCount * scaledStitchWidth;
     const spacing = remainderWidth / fullStitchCount;
-
     config.stitch.img.resize(scaledStitchWidth, 0);
 
     let oneColumn = p.createGraphics(scaledStitchWidth + spacing, config.texture.height);
@@ -232,7 +233,6 @@ const createFiller = () => {
     }
 
     setFillerTexture(config.filler.img);
-
     oneColumn = cleanupGraphic(oneColumn);
 }
 
@@ -290,26 +290,36 @@ const mapCurve = (value, inMin, inMax, outMin, outMax, easingFn) => {
 const easeOutCirc = t => Math.sqrt(1 - Math.pow(t - 1, 2));
 
 watch(palette, () => {
-    createYoke()
-    createFilledYoke();
-    p.redraw();
+    if (isP5Ready.value && palette && Array.isArray(palette) && palette.length > 0){
+        createYoke();
+        createFilledYoke();
+        p.redraw();
+    }
 })
 
 watch(() => palette[1].color, () => {
-    createFiller();
-    createFilledYoke();
+    if (isP5Ready.value && typeof palette[1]?.color === 'string' && palette[1].color.length > 0){
+        createFiller();
+        createFilledYoke();
+    }
 });
 
 watch(grid, () => {
-    createYoke();
-    createFilledYoke();
-    p.redraw();
+    console.log('grid watcher')
+    if (isP5Ready.value){
+        createYoke();
+        createFilledYoke();
+        p.redraw();
+    }
 })
 
 watch(selectedTemplate, () => {
-    createYoke();
-    createFilledYoke();
-    p.redraw();
+    console.log('selectedTemplate watcher')
+    if (isP5Ready.value){
+        createYoke();
+        createFilledYoke();
+        p.redraw();
+    }
 })
 
 onMounted(() => {
@@ -323,6 +333,7 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
+    isP5Ready.value = false;
     p.remove();
 });
 

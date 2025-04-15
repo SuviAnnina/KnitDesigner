@@ -1,5 +1,5 @@
 <script setup>
-import { setColorEmpty, palette, updateShow, changeSelectedColor } from '../colorStore';
+import { setColorEmpty, palette, updateShow, changeSelectedColor, updateColor } from '../colorStore';
 import deleteIcon from '../assets/icons/delete.svg';
 import selectIcon from '../assets/icons/select.svg';
 
@@ -27,7 +27,7 @@ const handleSelectedColor = (index) => {
             <button @click="handleDeleteColorPicker(index)" v-if="index !== 1" class="cursor-pointer">
                 <img :src="deleteIcon" alt="Delete" class="icon w-6 h-6" />
             </button>
-            <input type="color" v-model.lazy="palette[props.index].color" class="color-input" />
+            <input type="color" :value="palette[props.index].color" @change="(e) => updateColor(props.index, e.target.value)" class="color-input" />
             <button @click="handleSelectedColor(index)" class="cursor-pointer">
                 <img :src="selectIcon" alt="Select" class="icon w-6 h-6" />
             </button>

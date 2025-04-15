@@ -8,7 +8,7 @@ import { clearGrid, setGridValue, getGridLength, getRow } from '../gridStore'
 import saveIcon  from '../assets/icons/save.svg';
 
 let p5Instance;
-const chosenSize = ref("S");
+const chosenSize = ref("S"); // TODO: tää ei updatee hydratessa
 const squareWidth = 16;
 
 const handleClearGrid = () => {

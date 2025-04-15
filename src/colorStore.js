@@ -1,9 +1,8 @@
 import { reactive, ref } from 'vue'
 
 export const selectedColorIndex = ref(2);
-
-export const canvasColor = "#FFFFFF";
-export const bgColor = ref("#ACACAC");
+export const canvasColor = "#FFFFFF"; // grid background color
+export const bgColor = ref("#ACACAC"); // 2D and 3D visualization background color
 
 export const palette = reactive([
     {
@@ -66,4 +65,9 @@ export function changeBgColor() {
     } else {
         bgColor.value = "#ACACAC";
     }
+}
+
+// Hydrate from sessionStorage
+export function setPalette(newPalette) {
+    palette.splice(0, palette.length, ...newPalette);
 }

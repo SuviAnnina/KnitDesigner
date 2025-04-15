@@ -95,3 +95,8 @@ export const getRow = (index) => {
 export const getRowLength = (index) => {
     return 8 - getRow(index).filter(num => num === 0).length;
 }
+
+/* Hydrating */
+export const setGrid = (newGrid) => {
+    grid.splice(0, grid.length, ...newGrid);
+}
