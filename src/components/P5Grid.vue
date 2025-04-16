@@ -1,9 +1,10 @@
 <script setup>
-import { onMounted, onBeforeUnmount, computed, watch } from "vue";
+import { onMounted, onBeforeUnmount, ref, computed, watch } from "vue";
 import p5 from "p5";
 import { palette, selectedColorIndex, canvasColor } from "../colorStore";
 import { selectedTemplate, setSelectedTemplate } from "../templateStore";
 import { clearGrid, setGridValue, getGridLength, getRow } from '../gridStore'
+import ConfirmModal from "./ConfirmModal.vue";
 import saveIcon  from '../assets/icons/save.svg';
 
 let p5Instance;
@@ -12,15 +13,7 @@ const selectedSize = computed({
   set: (val) => setSelectedTemplate(val)
 });
 const squareWidth = 16;
-
-const handleClearGrid = () => {
-    const isConfirmed = confirm("Are you sure you want to clear grid?");
-
-    if (isConfirmed) {
-        clearGrid();
-        p5Instance.redraw();
-    }
-}
+const showConfirmModal = ref(false);
 
 const sketch = (p) => {
     p.setup = () => {
@@ -63,7 +56,7 @@ const sketch = (p) => {
 
     // handles the mouseclick for setting a squares color
     p.mouseClicked = () => {
-        if (p.mouseX < 0 || p.mouseX > p.width || p.mouseY < 0 || p.mouseY > p.height) {
+        if (showConfirmModal || p.mouseX < 0 || p.mouseX > p.width || p.mouseY < 0 || p.mouseY > p.height) {
             return
         }
         const x = p.floor(p.mouseX / squareWidth);
@@ -113,6 +106,16 @@ const easeInOutExpo = t =>
     ? Math.pow(2, 20 * t - 10) / 2
     : (2 - Math.pow(2, -20 * t + 10)) / 2;
 
+const confirmClear = () => {
+  clearGrid();
+  p5Instance.redraw();
+  showConfirmModal.value = false;
+};
+
+const cancelClear = () => {
+  showConfirmModal.value = false;
+};
+
 watch(palette, () => {
     p5Instance.redraw();
 })
@@ -141,10 +144,20 @@ onBeforeUnmount(() => {
                 <option value="XL">XL</option>
                 <option value="XXL">XXL</option>
             </select>
-            <button @click="handleClearGrid"
+            <button 
+                @click="showConfirmModal = true"
                 class="px-1.5 py-0.75 text-md bg-red-400 text-black rounded-lg hover:bg-red-500 focus:outline-none cursor-pointer">
                 Clear
             </button>
+
+            <Teleport to="body">
+                <ConfirmModal 
+                    v-if="showConfirmModal"
+                    @confirm="confirmClear"
+                    @cancel="cancelClear"
+                />
+             </Teleport>
+
         </div>
 
         <div id="p5-container" class="relative"></div>

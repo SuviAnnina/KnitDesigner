@@ -313,7 +313,6 @@ watch(grid, () => {
 })
 
 watch(selectedTemplate, () => {
-    console.log('selectedTemplate watcher')
     if (isP5Ready.value){
         createYoke();
         createFilledYoke();
