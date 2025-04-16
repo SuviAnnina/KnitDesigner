@@ -2,12 +2,12 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
-import { fillerTexture, filledYokeTexture } from '../textureStore.js';
+import { fillerTexture, filledYokeTexture } from '../stores/textureStore.js';
 import { ref, onBeforeUnmount, onMounted, watchEffect, watch } from 'vue';
 import leftClick from '../assets/icons/mouse-left.svg'
 import rightClick from '../assets/icons/mouse-right.svg'
 import middleClick from '../assets/icons/mouse-middle.svg'
-import { bgColor } from '../colorStore.js';
+import { bgColor } from '../stores/colorStore.js';
 
 const canvasContainer = ref(null);
 const isCanvasReady = ref(false);

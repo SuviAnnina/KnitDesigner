@@ -1,7 +1,11 @@
 <script setup>
 import ColorPicker from './ColorPicker.vue';
-import { palette, updateColor, updateShow, selectedColorIndex } from '../colorStore';
+import {ref} from 'vue';
+import { palette, updateColor, updateShow, selectedColorIndex } from '../stores/colorStore';
 import addIcon from '../assets/icons/add.svg';
+import ConfirmModal from './ConfirmModal.vue';
+
+const showConfirmModal = ref(false);
 
 const handleAddColorPicker = () => {
   // Find empty color slot
@@ -14,8 +18,12 @@ const handleAddColorPicker = () => {
     updateShow(emptySlotIndex, true);
   }
   else {
-    alert("You can't add more than 8 colors!");
+    showConfirmModal.value = true;
   }
+};
+
+const cancelClear = () => {
+  showConfirmModal.value = false;
 };
 </script>
 
@@ -29,6 +37,15 @@ const handleAddColorPicker = () => {
       <button @click="handleAddColorPicker" class="cursor-pointer">
         <img :src="addIcon" alt="Add" class="icon w-6 h-6" />
       </button>
+
+      <Teleport to="body">
+                <ConfirmModal 
+                    v-if="showConfirmModal"
+                    @cancel="cancelClear"
+                    message="Can't add more than 8 colors!"
+                    :buttons="['cancel']"
+                />
+             </Teleport>
     </div>
   </div>
 </template>

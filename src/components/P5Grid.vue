@@ -1,13 +1,14 @@
 <script setup>
 import { onMounted, onBeforeUnmount, ref, computed, watch } from "vue";
 import p5 from "p5";
-import { palette, selectedColorIndex, canvasColor } from "../colorStore";
-import { selectedTemplate, setSelectedTemplate } from "../templateStore";
-import { clearGrid, setGridValue, getGridLength, getRow } from '../gridStore'
+import { palette, selectedColorIndex, canvasColor } from "../stores/colorStore";
+import { selectedTemplate, setSelectedTemplate } from "../stores/templateStore";
+import { clearGrid, setGridValue, getGridLength, getRow } from '../stores/gridStore'
 import ConfirmModal from "./ConfirmModal.vue";
 import saveIcon  from '../assets/icons/save.svg';
 
 let p5Instance;
+let blockClick = false;
 const selectedSize = computed({
   get: () => selectedTemplate.value.size,
   set: (val) => setSelectedTemplate(val)
@@ -47,6 +48,10 @@ const sketch = (p) => {
                 if (row[x] === 0) {
                     continue;
                 }
+                // let colorEntry = palette[row[x]];
+                // let fillColor = colorEntry && typeof colorEntry.color === "string" ? colorEntry.color : palette[1].color;
+                // p.fill(fillColor);
+                // p.stroke(getContrast(fillColor, p));
                 p.fill(palette[row[x]].color);
                 p.stroke(getContrast(palette[row[x]].color, p));
                 p.square(x * squareWidth, y * squareWidth, squareWidth);
@@ -56,7 +61,7 @@ const sketch = (p) => {
 
     // handles the mouseclick for setting a squares color
     p.mouseClicked = () => {
-        if (showConfirmModal || p.mouseX < 0 || p.mouseX > p.width || p.mouseY < 0 || p.mouseY > p.height) {
+        if (/* showConfirmModal.value */ blockClick || p.mouseX < 0 || p.mouseX > p.width || p.mouseY < 0 || p.mouseY > p.height) {
             return
         }
         const x = p.floor(p.mouseX / squareWidth);
@@ -86,7 +91,7 @@ const getContrast = (color, p) => {
     const darkness = 100 - brightness;
     let contrast = mapCurve(darkness, 0, 100, 0, 255, easeInOutExpo);
 
-    const offset = 125; // how much to correct the color to avoid similar tones
+    const offset = 125; // corrects the color to avoid similar tones
     if (brightness >= 45 && brightness <= 55){ 
         contrast += offset;
     }
@@ -100,20 +105,33 @@ const mapCurve = (value, inMin, inMax, outMin, outMax, easingFn) => {
 }
 
 const easeInOutExpo = t =>
-  t === 0 ? 0 :
-  t === 1 ? 1 :
-  t < 0.5
-    ? Math.pow(2, 20 * t - 10) / 2
-    : (2 - Math.pow(2, -20 * t + 10)) / 2;
+    t === 0 ? 0 :
+    t === 1 ? 1 :
+    t < 0.5
+        ? Math.pow(2, 20 * t - 10) / 2
+        : (2 - Math.pow(2, -20 * t + 10)) / 2;
 
 const confirmClear = () => {
-  clearGrid();
-  p5Instance.redraw();
-  showConfirmModal.value = false;
+    clearGrid();
+    p5Instance.redraw();
+    showConfirmModal.value = false;
+
+    setTimeout(() => {
+        blockClick = false;
+    }, 100);
 };
 
 const cancelClear = () => {
-  showConfirmModal.value = false;
+    showConfirmModal.value = false;
+
+    setTimeout(() => {
+        blockClick = false;
+    }, 100);
+};
+
+const openConfirmModal = () => {
+    blockClick = true;
+    showConfirmModal.value = true;
 };
 
 watch(palette, () => {
@@ -144,17 +162,20 @@ onBeforeUnmount(() => {
                 <option value="XL">XL</option>
                 <option value="XXL">XXL</option>
             </select>
+
             <button 
-                @click="showConfirmModal = true"
+                @click="openConfirmModal"
                 class="px-1.5 py-0.75 text-md bg-red-400 text-black rounded-lg hover:bg-red-500 focus:outline-none cursor-pointer">
-                Clear
-            </button>
+                Clear 
+            </button>   
 
             <Teleport to="body">
                 <ConfirmModal 
                     v-if="showConfirmModal"
+                    :message="'Clear grid?'"
                     @confirm="confirmClear"
                     @cancel="cancelClear"
+                    :buttons="['yes', 'cancel']"
                 />
              </Teleport>
 

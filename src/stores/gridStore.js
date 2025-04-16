@@ -96,6 +96,12 @@ export const getRowLength = (index) => {
     return 8 - getRow(index).filter(num => num === 0).length;
 }
 
+export const updateGrid = (index) => {
+    grid.forEach((row, rowIndex) => {
+        grid[rowIndex] = row.map(value => value === index ? 1 : value);
+    });
+};
+
 /* Hydrating */
 export const setGrid = (newGrid) => {
     grid.splice(0, grid.length, ...newGrid);

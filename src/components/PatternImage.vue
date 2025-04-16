@@ -1,11 +1,10 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, watch } from "vue";
-import { palette, bgColor, changeBgColor } from "../colorStore.js";
-import { grid } from "../gridStore.js";
 import p5 from "p5";
-import { getGridLength, getRowLength, getRow } from "../gridStore.js";
-import { selectedTemplate } from "../templateStore.js";
-import { setFillerTexture, setFilledYokeTexture } from "../textureStore.js";
+import { palette, bgColor, changeBgColor } from "../stores/colorStore.js";
+import { grid, getGridLength, getRowLength, getRow } from "../stores/gridStore.js";
+import { selectedTemplate } from "../stores/templateStore.js";
+import { setFillerTexture, setFilledYokeTexture } from "../stores/textureStore.js";
 import saveIcon  from '../assets/icons/save.svg';
 import canvasColorIcon from '../assets/icons/canvas-color.svg'
 

@@ -4,11 +4,10 @@ import P5Grid from './components/P5Grid.vue';
 import { onMounted, watch } from "vue";
 import PatternImage from './components/PatternImage.vue';
 import KnitModel from './components/KnitModel.vue';
-
 import { getSavedSession, updateSavedSession } from './saveSession';
-import { palette, setPalette } from './colorStore';
-import { grid, setGrid } from './gridStore';
-import { selectedTemplate, setSelectedTemplate } from './templateStore';
+import { palette, setPalette } from './stores/colorStore';
+import { grid, setGrid } from './stores/gridStore';
+import { selectedTemplate, setSelectedTemplate } from './stores/templateStore';
 
 watch(palette, () => {
   updateSavedSession({ palette: JSON.parse(JSON.stringify(palette)) });
