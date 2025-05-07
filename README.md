@@ -2,7 +2,9 @@
 
 Knit Designer is a web application for knitters to create unique custom patterns for knitted yokes. With a simple, responsive interface, users can design their own patterns using the 2D grid and chosen colors. The app generates a 2D image to represent the knit’s yoke, and also renders a 3D model showcasing what the user’s pattern could look like on an actual knitted sweater.
 
-Designed for hobbyist knitters, this app helps bring ideas to life and visualize custom-knit designs with ease. Experiment with different patterns and colors to create your perfect knit!
+Designed for hobbyist knitters, this app helps bring ideas to life and visualize custom-knit designs with ease. Experiment with different patterns and colors to create your perfect knit!  
+
+[KnitDesigner](https://knitdesigner.netlify.app/) is live on Netlify!
 
 ## Features
 
